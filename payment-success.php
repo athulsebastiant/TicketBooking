@@ -34,14 +34,14 @@ if (isset($_GET['order_id'])) {
 
         // Update available tickets in events table
         // First, get the booking_id from the payment table
-        $get_booking_id = "SELECT id FROM payment WHERE order_id = ?";
+        $get_booking_id = "SELECT booking_id FROM payment WHERE order_id = ?";
         $stmt = $mysqli->prepare($get_booking_id);
         $stmt->bind_param("s", $order_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($payment_row = $result->fetch_assoc()) {
-            $payment_id = $payment_row['id'];
+            $payment_id = $payment_row['booking_id'];
 
             // Now update the tickets
             $update_tickets = "UPDATE events e
@@ -94,17 +94,37 @@ $mysqli->close();
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            background-color: #f0f8ff;
+            /* Light blue background */
+            text-align: center;
         }
 
         h2 {
             color: #4CAF50;
+            /* Success green */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            /* Darker text color */
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #4285f4;
+            /* Blue for links */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
+    <a href="generate_ticket.php?order_id=<?php echo htmlspecialchars($order_id); ?>">Download Ticket</a> |
     <a href="index.php">Back to Home</a>
 </body>
 

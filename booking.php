@@ -35,10 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $booking_id = $stmt->insert_id;
 
     // Insert payment
-    $order_id = uniqid('ORDER');
-    $insert_payment = "INSERT INTO payment (name, email, mobile_number, payment_amount, order_id, order_status) VALUES (?, ?, ?, ?, ?, 'pending')";
+    function generateOrderId()
+    {
+        $timestamp = time();
+        $random = mt_rand(0, 999);
+        $order_id = 'OR' . substr($timestamp, -5) . str_pad($random, 3, '0', STR_PAD_LEFT);
+        return $order_id;
+    }
+
+    $order_id = generateOrderId();
+    $insert_payment = "INSERT INTO payment (name, email, mobile_number, payment_amount, order_id, order_status,booking_id) VALUES (?, ?, ?, ?, ?, 'pending',?)";
     $stmt = $mysqli->prepare($insert_payment);
-    $stmt->bind_param("sssds", $name, $email, $mobile, $total_price, $order_id);
+    $stmt->bind_param("sssdsi", $name, $email, $mobile, $total_price, $order_id, $booking_id);
     $stmt->execute();
 
     // Redirect to payment gateway (you'll need to implement this)
@@ -60,12 +68,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             line-height: 1.6;
             margin: 0;
             padding: 20px;
+            background-color: #f0f8ff;
+            /* Light blue background */
         }
 
         .event-details,
         .booking-form {
             max-width: 600px;
             margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4285f4;
+            /* Blue for heading */
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -74,6 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         label {
             display: block;
+            font-weight: bold;
+            color: #666;
+            /* Darker grey for labels */
             margin-bottom: 5px;
         }
 
@@ -82,22 +106,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="tel"],
         input[type="number"] {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            border: 1px solid #e6e6e6;
+            /* Light grey border */
             border-radius: 4px;
+            color: #333;
+            /* Darker text color */
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #ff6384;
+            /* Pink for button */
             color: white;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            display: block;
+            width: 100%;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #ff4d6a;
+            /* Darker pink on hover */
         }
     </style>
 </head>
