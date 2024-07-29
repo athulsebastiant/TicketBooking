@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script>
-        const form = document.getElementById('bookingForm');
+        /*const form = document.getElementById('bookingForm');
         const numTicketsInput = document.getElementById('num_tickets');
         const totalPriceSpan = document.getElementById('totalPrice');
         const ticketPrice = <?php echo $event['price']; ?>;
@@ -182,13 +182,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const numTickets = parseInt(numTicketsInput.value) || 0;
             const totalPrice = numTickets * ticketPrice;
             totalPriceSpan.textContent = totalPrice.toFixed(2);
-        }
+        }*/
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (confirm('Are you sure you want to book these tickets?')) {
-                this.submit();
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('bookingForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const mobileInput = document.getElementById('mobile');
+            const numTicketsInput = document.getElementById('num_tickets');
+            const totalPriceSpan = document.getElementById('totalPrice');
+            const ticketPrice = <?php echo json_encode($event['price']); ?>;
+            const availableTickets = <?php echo json_encode($event['available_tickets']); ?>;
+
+            // Update total price when number of tickets changes
+            numTicketsInput.addEventListener('input', updateTotalPrice);
+
+            function updateTotalPrice() {
+                const numTickets = parseInt(numTicketsInput.value) || 0;
+                const total = numTickets * ticketPrice;
+                totalPriceSpan.textContent = total.toFixed(2);
             }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Validate name
+                if (nameInput.value.trim() === '') {
+                    alert('Please enter your name.');
+                    nameInput.focus();
+                    return;
+                }
+
+                // Validate email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    alert('Please enter a valid email address.');
+                    emailInput.focus();
+                    return;
+                }
+
+                // Validate mobile number
+                const mobileRegex = /^\+?[\d\s-]{10,15}$/;
+                if (!mobileRegex.test(mobileInput.value)) {
+                    alert('Please enter a valid mobile number.');
+                    mobileInput.focus();
+                    return;
+                }
+
+                // Validate number of tickets
+                const numTickets = parseInt(numTicketsInput.value);
+                if (isNaN(numTickets) || numTickets < 1 || numTickets > availableTickets) {
+                    alert(`Please enter a valid number of tickets (1-${availableTickets}).`);
+                    numTicketsInput.focus();
+                    return;
+                }
+
+                // If all validations pass, submit the form
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to book these tickets?')) {
+                        this.submit();
+                    }
+                });
+            });
         });
     </script>
 </body>

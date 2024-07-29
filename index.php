@@ -76,10 +76,44 @@
              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
              transform: translateY(-2px);
          }
+
+         .navbar {
+             background-color: #333;
+             overflow: hidden;
+             position: sticky;
+             top: 0;
+             width: 100%;
+             z-index: 1000;
+         }
+
+         .navbar a {
+             float: left;
+             display: block;
+             color: #f2f2f2;
+             text-align: center;
+             padding: 14px 16px;
+             text-decoration: none;
+             font-size: 17px;
+         }
+
+         .navbar a:hover {
+             background-color: #ddd;
+             color: black;
+         }
+
+         .navbar a.active {
+             background-color: #4285f4;
+             color: white;
+         }
      </style>
  </head>
 
  <body>
+     <div class="navbar">
+         <a class="active" href="index.php">Home</a>
+         <a href="about.php">About Us</a>
+         <a href="contact.php">Contact Us</a>
+     </div>
      <h1>Upcoming Events</h1>
      <div class="event-list">
          <?php while ($event = $result->fetch_assoc()) : ?>
