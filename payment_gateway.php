@@ -51,7 +51,7 @@ $mysqli->close();
             if (typeof ordersData !== 'undefined' && ordersData.length > 0) {
                 // Use the first order in the array (you might want to modify this based on your requirements)
                 var order = ordersData[0];
-
+                //https://your-logo-url.com/logo.png
                 // Extract order information
                 var billing_name = order.name;
                 var billing_email = order.email;
@@ -90,10 +90,11 @@ $mysqli->close();
                         var options = {
                             "key": data.razorpay_key,
                             "amount": data.userData.amount,
+
                             "currency": "INR",
-                            "name": "Your Business Name",
+                            "name": "Seb Industries",
                             "description": data.userData.description,
-                            "image": "https://your-logo-url.com/logo.png",
+                            "image": "https://www.whoswho.fr/usr/l/H/L/logo_seb.JPG",
                             "order_id": data.userData.rpay_order_id,
                             "handler": function(response) {
                                 window.location.replace("payment-success.php?order_id=" + orderID + "&rp_payment_id=" + response.razorpay_payment_id + "&rp_signature=" + response.razorpay_signature);
@@ -115,6 +116,7 @@ $mysqli->close();
                                 "color": "#3399cc"
                             }
                         };
+                        console.log("Amount received in frontend:", data.userData.amount);
                         var rzp1 = new Razorpay(options);
                         rzp1.on('payment.failed', function(response) {
                             window.location.replace("payment-failed.php?order_id=" + orderID + "&reason=" + response.error.description + "&paymentid=" + response.error.metadata.payment_id);

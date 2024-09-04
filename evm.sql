@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2024 at 07:21 AM
+-- Generation Time: Sep 04, 2024 at 04:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `evm`
 --
-CREATE DATABASE IF NOT EXISTS `evm` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `evm`;
 
 -- --------------------------------------------------------
 
@@ -52,7 +50,15 @@ INSERT INTO `bookings` (`booking_id`, `event_id`, `user_id`, `num_tickets`, `tot
 (10, 101, 0, 2, 400.00, '2024-07-27 09:54:35'),
 (11, 102, 0, 2, 400.00, '2024-07-27 10:15:47'),
 (12, 103, 0, 3, 150.00, '2024-07-27 10:18:59'),
-(13, 101, 0, 3, 600.00, '2024-07-27 10:31:52');
+(13, 101, 0, 3, 600.00, '2024-07-27 10:31:52'),
+(14, 104, 0, 3, 1200.00, '2024-07-28 12:59:33'),
+(15, 104, 0, 2, 800.00, '2024-07-28 13:04:18'),
+(16, 103, 0, 5, 250.00, '2024-07-28 13:14:26'),
+(17, 104, 0, 2, 800.00, '2024-08-07 12:52:42'),
+(18, 101, 0, 2, 400.00, '2024-08-21 12:15:16'),
+(19, 101, 0, 2, 400.00, '2024-08-21 12:17:02'),
+(20, 101, 0, 2, 400.00, '2024-08-21 12:20:37'),
+(21, 102, 0, 3, 600.00, '2024-09-04 19:17:27');
 
 -- --------------------------------------------------------
 
@@ -78,10 +84,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `title`, `description`, `date`, `time`, `location`, `image`, `total_tickets`, `available_tickets`, `price`) VALUES
-(101, 'Justin Bieber\'s concert', 'JB at Mumbai', '2024-07-31', '21:45:30', 'Mumbai', 'jbconcert.webp', 500, 242, 200.00),
-(102, 'Tedx Mumbai', 'Ted talk season 4', '2024-07-31', '21:45:30', 'Mumbai', 'tedx.jpg', 500, 243, 200.00),
-(103, 'Stand up with Atul Khatri', 'Renowned comedian Atul Khatri takes the audience for a fun time.', '2024-09-12', '10:17:46', 'Mumbai', 'atulkhatri.jpg', 100, 15, 50.00),
-(104, 'IPL - MI vs CSK', 'Mumbai Indians vs Chennai Super Kings', '2024-08-14', '18:36:56', 'Mumbai', 'mi.webp', 600, 450, 400.00);
+(101, 'Justin Bieber\'s concert', 'JB at Mumbai', '2024-11-06', '21:45:30', 'Mumbai', 'jbconcert.webp', 500, 240, 200.00),
+(102, 'Tedx Mumbai', 'Ted talk season 4', '2024-09-26', '21:45:30', 'Mumbai', 'tedx.jpg', 500, 240, 200.00),
+(103, 'Stand up with Atul Khatri', 'Renowned comedian Atul Khatri takes the audience for a fun time.', '2024-09-12', '10:17:46', 'Mumbai', 'atulkhatri.jpg', 100, 10, 50.00),
+(104, 'IPL - MI vs CSK', 'Mumbai Indians vs Chennai Super Kings', '2024-10-16', '18:36:56', 'Mumbai', 'mi.webp', 600, 443, 400.00);
 
 -- --------------------------------------------------------
 
@@ -105,11 +111,8 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id`, `name`, `email`, `mobile_number`, `payment_amount`, `order_id`, `order_status`, `booking_id`) VALUES
-(5, 'Athul Sebastian', 'athulsebastiant@gmail.com', '08921866268', 100.00, 'OR53124169', 'success', 9),
-(6, 'Justin', 'jb23@gmail.com', '01234567891', 400.00, 'OR54275688', 'success', 10),
-(7, 'Ram', 'rrkabel@gg.com', '7453532325', 400.00, 'OR55547962', 'success', 11),
-(8, 'Faf', 'ff@gg.cm', '2121212122121', 150.00, 'OR55739607', 'success', 12),
-(9, 'Raju', 'rr@69hh.com', '212121124', 600.00, 'OR56512058', 'success', 13);
+(0, 'Lilly', 'lillygeorge0225@gmail.com', '08921866267', 400.00, 'OR23037676', 'success', 20),
+(0, 'Sivan', 'sstp@gmail.com', '2034891332', 600.00, 'OR57647301', 'success', 21);
 
 -- --------------------------------------------------------
 
@@ -144,13 +147,6 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`event_id`);
 
 --
--- Indexes for table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `booking_id` (`booking_id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -166,19 +162,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `booking_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
   MODIFY `event_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -195,12 +185,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`);
-
---
--- Constraints for table `payment`
---
-ALTER TABLE `payment`
-  ADD CONSTRAINT `fk_payment_bookings` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`booking_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

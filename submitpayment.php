@@ -8,8 +8,8 @@ header('Access-Control-Allow-Headers:Access-Control-Allow-Origin,Access-Control-
 if (isset($_POST['action']) && $_POST['action'] = 'payOrder') {
 
 
-    //$razorpay_test_key = ''; //Your Test Key
-    //$razorpay_test_secret_key = ''; //Your Test Secret Key
+    $razorpay_test_key = 'rzp_test_bPVqwKHk97qTjm'; //Your Test Key
+    $razorpay_test_secret_key = 'X4TOM7igrBCvxJK2FhAitanz'; //Your Test Secret Key
 
 
 
@@ -34,11 +34,11 @@ if (isset($_POST['action']) && $_POST['action'] = 'payOrder') {
     $shipping_email = $_POST['shipping_email'];
     $paymentOption = $_POST['paymentOption'];
     $payAmount = $_POST['payAmount'];
-
+    error_log("Initial payAmount: " . $payAmount);
     $note = "Payment of amount Rs. " . $payAmount;
 
     $postdata = array(
-        "amount" => $payAmount * 100,
+        "amount" => (int)($payAmount * 100),
         "currency" => "INR",
         "receipt" => $note,
         "notes" => array(
@@ -46,6 +46,8 @@ if (isset($_POST['action']) && $_POST['action'] = 'payOrder') {
             "notes_key_2" => ""
         )
     );
+
+    error_log("Amount sent to Razorpay: " . $postdata['amount']);
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -68,19 +70,21 @@ if (isset($_POST['action']) && $_POST['action'] = 'payOrder') {
 
     curl_close($curl);
     $orderRes = json_decode($response);
-
+    error_log("Razorpay response: " . print_r($orderRes, true));
     if (isset($orderRes->id)) {
 
         $rpay_order_id = $orderRes->id;
 
         $dataArr = array(
             'amount' => $payAmount,
+
             'description' => "Pay bill of Rs. " . $payAmount,
             'rpay_order_id' => $rpay_order_id,
             'name' => $billing_name,
             'email' => $billing_email,
             'mobile' => $billing_mobile
         );
+        error_log("Amount sent to frontend: " . $dataArr['amount']);
         echo json_encode(['res' => 'success', 'order_number' => $order_id, 'userData' => $dataArr, 'razorpay_key' => $razorpay_key]);
         exit;
     } else {
