@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $mysqli->real_escape_string($_POST['email']);
     $mobile = $mysqli->real_escape_string($_POST['mobile']);
     $num_tickets = intval($_POST['num_tickets']);
-    $total_price = $num_tickets * $event['price'];
+    $total_price =  $num_tickets * $event['price'];
 
     // Insert booking
     $insert_booking = "INSERT INTO bookings (event_id, num_tickets, total_price, created_at) VALUES (?, ?, ?, NOW())";
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     // Redirect to payment gateway (you'll need to implement this)
-    header("Location: payment_gateway.php?order_id=" . $order_id);
+    header("Location: pg2.php?order_id=" . $order_id . "&payAmount="  . (int)$total_price);
     exit;
 }
 ?>
