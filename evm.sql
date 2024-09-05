@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2024 at 04:32 PM
+-- Generation Time: Sep 05, 2024 at 05:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,7 +58,15 @@ INSERT INTO `bookings` (`booking_id`, `event_id`, `user_id`, `num_tickets`, `tot
 (18, 101, 0, 2, 400.00, '2024-08-21 12:15:16'),
 (19, 101, 0, 2, 400.00, '2024-08-21 12:17:02'),
 (20, 101, 0, 2, 400.00, '2024-08-21 12:20:37'),
-(21, 102, 0, 3, 600.00, '2024-09-04 19:17:27');
+(21, 102, 0, 3, 600.00, '2024-09-04 19:17:27'),
+(22, 103, 0, 3, 150.00, '2024-09-05 07:37:30'),
+(23, 103, 0, 2, 100.00, '2024-09-05 07:43:00'),
+(24, 104, 0, 3, 1200.00, '2024-09-05 07:44:26'),
+(25, 103, 0, 9, 450.00, '2024-09-05 07:59:00'),
+(26, 101, 0, 6, 1200.00, '2024-09-05 08:04:19'),
+(27, 102, 0, 7, 1400.00, '2024-09-05 08:07:48'),
+(28, 102, 0, 6, 1200.00, '2024-09-05 08:13:06'),
+(29, 104, 0, 6, 2400.00, '2024-09-05 09:00:36');
 
 -- --------------------------------------------------------
 
@@ -84,10 +92,10 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `title`, `description`, `date`, `time`, `location`, `image`, `total_tickets`, `available_tickets`, `price`) VALUES
-(101, 'Justin Bieber\'s concert', 'JB at Mumbai', '2024-11-06', '21:45:30', 'Mumbai', 'jbconcert.webp', 500, 240, 200.00),
-(102, 'Tedx Mumbai', 'Ted talk season 4', '2024-09-26', '21:45:30', 'Mumbai', 'tedx.jpg', 500, 240, 200.00),
-(103, 'Stand up with Atul Khatri', 'Renowned comedian Atul Khatri takes the audience for a fun time.', '2024-09-12', '10:17:46', 'Mumbai', 'atulkhatri.jpg', 100, 10, 50.00),
-(104, 'IPL - MI vs CSK', 'Mumbai Indians vs Chennai Super Kings', '2024-10-16', '18:36:56', 'Mumbai', 'mi.webp', 600, 443, 400.00);
+(101, 'Justin Bieber\'s concert', 'JB at Mumbai', '2024-11-06', '21:45:30', 'Mumbai', 'jbconcert.webp', 500, 234, 200.00),
+(102, 'Tedx Mumbai', 'Ted talk season 4', '2024-09-26', '21:45:30', 'Mumbai', 'tedx.jpg', 500, 227, 200.00),
+(103, 'Stand up with Atul Khatri', 'Renowned comedian Atul Khatri takes the audience for a fun time.', '2024-09-12', '10:17:46', 'Mumbai', 'atulkhatri.jpg', 100, 1, 50.00),
+(104, 'IPL - MI vs CSK', 'Mumbai Indians vs Chennai Super Kings', '2024-10-16', '18:36:56', 'Mumbai', 'mi.webp', 600, 434, 400.00);
 
 -- --------------------------------------------------------
 
@@ -100,7 +108,7 @@ CREATE TABLE `payment` (
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `mobile_number` varchar(255) DEFAULT NULL,
-  `payment_amount` decimal(5,2) DEFAULT NULL,
+  `payment_amount` decimal(10,2) DEFAULT NULL,
   `order_id` varchar(10) DEFAULT NULL,
   `order_status` varchar(10) DEFAULT NULL,
   `booking_id` int(10) UNSIGNED NOT NULL
@@ -112,7 +120,15 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`id`, `name`, `email`, `mobile_number`, `payment_amount`, `order_id`, `order_status`, `booking_id`) VALUES
 (0, 'Lilly', 'lillygeorge0225@gmail.com', '08921866267', 400.00, 'OR23037676', 'success', 20),
-(0, 'Sivan', 'sstp@gmail.com', '2034891332', 600.00, 'OR57647301', 'success', 21);
+(0, 'Sivan', 'sstp@gmail.com', '2034891332', 600.00, 'OR57647301', 'success', 21),
+(0, 'Sivan', 'sstp@gmail.com', '2034891332', 150.00, 'OR02050729', 'pending', 22),
+(0, 'King Sebastian', 'kingsebastiant@gmail.com', '08921866267', 100.00, 'OR02380540', 'pending', 23),
+(0, 'King Sebastian', 'kingsebastiant@gmail.com', '08921866267', 999.99, 'OR02466247', 'success', 24),
+(0, 'Raju', 'rr@69hh.com', '2121211241212', 450.00, 'OR03340107', 'success', 25),
+(0, 'King Sebastian', 'kingsebastiant@gmail.com', '08921866267', 999.99, 'OR03659016', 'success', 26),
+(0, 'Sardar P', 'spd22@gmail.com', '01320562965', 999.99, 'OR03868337', 'success', 27),
+(0, 'Sardar P', 'spd22@gmail.com', '01320562965', 1200.00, 'OR04186280', 'success', 28),
+(0, 'Sardar P', 'spd22@gmail.com', '01320562965', 2400.00, 'OR07036526', 'success', 29);
 
 -- --------------------------------------------------------
 
@@ -162,7 +178,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `booking_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `events`
