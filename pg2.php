@@ -12,8 +12,8 @@ if ($mysqli->connect_error) {
 
 
 
-$api_key = 'rzp_test_bPVqwKHk97qTjm'; //Your Test Key
-$api_secret = 'X4TOM7igrBCvxJK2FhAitanz'; //Your Test Secret Key
+$api_key = ''; //Your Test Key
+$api_secret = ''; //Your Test Secret Key
 
 
 
